@@ -69,8 +69,8 @@ class Recipe(models.Model):
     time_minutes = models.IntegerField(validators=[MaxValueValidator(59)])
     price = models.DecimalField(max_digits=3, decimal_places=2)
     link = models.CharField(max_length=255, blank=True)
-    ingredient = models.ManyToManyField('Ingredient')
-    tag = models.ManyToManyField('Tag')
+    ingredients = models.ManyToManyField('Ingredient')
+    tags = models.ManyToManyField('Tag')
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE
