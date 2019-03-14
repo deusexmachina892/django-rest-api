@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, \
     PermissionsMixin
 from django.conf import settings
+from django.core.validators import MaxValueValidator
 
 
 class UserManager(BaseUserManager):
@@ -60,3 +61,17 @@ class Ingredient(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Recipe(models.Model):
+    """Recipe Model"""
+    title = models.CharField(max_length=255)
+    time_minutes = models.IntegerField(validators=[MaxValueValidator(59)])
+    price = models.DecimalField(max_digits=3, decimal_places=2)
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE
+    )
+
+    def __str__(self):
+        return self.title
